@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 로그인</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            margin-top: 20px;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-3">관리자 로그인</h1>
+    <form th:action="@{/admin/login}" method="post" th:object="${member}">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" th:field="*{email}" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+<script th:if="${message}" th:inline="javascript">
+    /*<![CDATA[*/
+    alert([[${message}]]);
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>오류 발생</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            height: 100%;
+        }
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid text-center">
+    <h1 class="display-4">오류가 발생했습니다</h1>
+    <p class="lead" th:text="${errorMessage}">여기에 오류 메시지가 표시됩니다.</p>
+    <div class="inline-block">
+        <a th:href="${prevPage}" class="btn btn-success">이전 페이지로 돌아가기</a>
+        <a th:href="@{/admin}" class="btn btn-primary">관리자 대시보드로 이동</a>
+        <a th:href="${mainPage}" class="btn btn-secondary">리스트로 이동</a>
+    </div>
+</div>
+</body>
+</html>

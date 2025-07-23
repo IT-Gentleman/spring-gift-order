@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품목록</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>상품목록</h2>
+    <div class="mb-3 d-flex justify-content-between align-items-start">
+        <div>
+            <a th:if="${validated}"
+               th:href="@{/admin/products(validated=false)}"
+               class="btn btn-dark">
+                Go to Non-Validated Product List
+            </a>
+            <a th:if="${!validated}"
+               th:href="@{/admin/products(validated=true)}"
+               class="btn btn-dark">
+                Go to Validated Product List
+            </a>
+            <a href="/admin/products/new"
+               class="btn btn-success">
+                Create New Product
+            </a>
+        </div>
+        <form th:action="@{/admin/products}" method="get" class="form-inline justify-content-end">
+            <label for="pageSize" class="mr-2">Items per page:</label>
+            <select id="pageSize" name="size" class="form-control form-control-sm mr-2">
+                <option value="10" th:selected="${products.size == 10}">10</option>
+                <option value="20" th:selected="${products.size == 20}">20</option>
+                <option value="30" th:selected="${products.size == 30}">30</option>
+                <option value="40" th:selected="${products.size == 40}">40</option>
+                <option value="50" th:selected="${products.size == 50}">50</option>
+            </select>
+            <input type="hidden" name="page" th:value="${products.number}">
+            <input type="hidden" name="validated" th:value="${validated}">
+            <label for="sortOrder" class="mr-2">Sort by:</label>
+            <select id="sortOrder" name="sort" class="form-control form-control-sm mr-2">
+                <option value="createdAt,desc" th:selected="${products.sort == 'createdAt: DESC'}">Created At (Desc)</option>
+                <option value="createdAt,asc" th:selected="${products.sort == 'createdAt: ASC'}">Created At (Asc)</option>
+                <option value="--------------" disabled>-----</option>
+                <option value="id,asc" th:selected="${products.sort == 'id: ASC'}">ID (Asc)</option>
+                <option value="id,desc" th:selected="${products.sort == 'id: DESC'}">ID (Desc)</option>
+                <option value="name,asc" th:selected="${products.sort == 'name: ASC'}">Name (Asc)</option>
+                <option value="name,desc" th:selected="${products.sort == 'name: DESC'}">Name (Desc)</option>
+                <option value="price,asc" th:selected="${products.sort == 'price: ASC'}">Price (Asc)</option>
+                <option value="price,desc" th:selected="${products.sort == 'price: DESC'}">Price (Desc)</option>
+            </select>
+            <button type="submit" class="btn btn-info btn-sm align-self-start">View</button>
+        </form>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>id</th>
+            <th>image</th>
+            <th>name</th>
+            <th>price</th>
+            <th>View/Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product: ${products.content}">
+            <td th:text="${product.id}" />
+            <td class="text-center p-0 align-middle">
+                <img th:src="${product.imageUrl}" height="50" />
+            </td>
+            <td th:text="${product.name}" />
+            <td th:text="${product.price}" />
+            <td class="text-center align-middle">
+                <a th:href="@{/admin/products/{id}(id=${product.id})}" class="btn btn-primary btn-sm">View/Edit</a>
+            </td>
+            <td class="text-center align-middle">
+                <form th:action="@{/admin/products/{id}(id=${product.id})}"
+                      method="post" style="display:inline"
+                      onsubmit="return confirm('Are you sure to delete?');">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${products.first} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/products(validated=${validated}, page=${products.number - 1}, size=${products.size})}">Previous</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}" th:classappend="${i == products.number} ? 'active'">
+                <a class="page-link" th:href="@{/admin/products(validated=${validated}, page=${i}, size=${products.size})}" th:text="${i + 1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${products.last} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/products(validated=${validated}, page=${products.number + 1}, size=${products.size})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script th:if="${message}" th:inline="javascript">
+    /*<![CDATA[*/
+    alert([[${message}]]);
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        hbm2ddl:
+          import_files:
+  sql:
+    init:
+      mode: never
+  main:
+    allow-bean-definition-overriding: true
+jwt:
+  secret-key: bXktcHJpdmF0ZS1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tMzItYnl0ZXMtbGVuZ3RoLXNlY3VyZS1rZXktZm9yLWpqd3Q=
+  expire-length-ms: 3600000

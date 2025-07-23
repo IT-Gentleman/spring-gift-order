@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: spring-gift
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:product
+    username: sa
+    password:
+  sql:
+    init:
+      mode: embedded
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+jwt:
+  secret-key: bXktcHJpdmF0ZS1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tMzItYnl0ZXMtbGVuZ3RoLXNlY3VyZS1rZXktZm9yLWpqd3Q=
+  expire-length-ms: 3600000
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE
