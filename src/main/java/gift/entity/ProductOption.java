@@ -18,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
         @UniqueConstraint(columnNames = {"product_id", "name"}),
 })
 @EntityListeners(AuditingEntityListener.class)
-public class ProductOption extends HardDeleteEntity {
+public class ProductOption extends BaseAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)

@@ -37,7 +37,7 @@
 - [ ] LoginMemberArgumentResolver에서 ThreadLocal 활용한 id 추출
   - JPA Auditing 과정에서 추출한 memberId를 AuthService에 전달하여, 검증과정을 생략하고 곧바로 Member 객체 조회
 - [ ] ThreadLocal set/clear 부의 try-finally로 감싸기
-- [ ] HardDeleteEntity 삭제
+- [x] HardDeleteEntity 삭제
   - 불필요한 복잡성 감소 (현재 HardDeleteEntity는 역할 없음)
   - 해당 엔티티를 상속한 엔티티들은 BaseAuditingEntity를 직접 상속하도록 변경
 
