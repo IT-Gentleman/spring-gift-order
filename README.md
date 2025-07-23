@@ -28,10 +28,9 @@
 
 ## Step1
 ### implementation
-#### [fix]
-- [ ] Entity 필드의 `Min`, `Max` 어노테이션 제거
-
 #### [refactor]
+- [x] Entity 필드의 `Min`, `Max` 어노테이션 제거
+  - flush 시점에 어노테이션이 검증되기는 하나, set시점에 명시적으로 검증하도록 변경
 - [ ] ProductOptionRepository의 미사용 메소드 제거
 - [ ] JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
   - 위험성(순환참조 등), 복잡성, 의존성 낮추기 위한 조치
@@ -55,6 +54,7 @@
 - 상품 옵션 재고 동시수정 시 동시성 문제 해결
   - `Version` 어노테이션을 가진 필드 추가를 통한 낙관적 Locking이 가능해보임
   - 이 구현방법 사용 시, Service 레이어에서 최대 N회 재시도하는 로직 구현 필요
+- Entity 단위테스트 추가
 
 ### Wondering to apply
 #### [refactor]

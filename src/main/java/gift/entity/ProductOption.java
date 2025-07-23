@@ -28,8 +28,6 @@ public class ProductOption extends HardDeleteEntity {
     private String name;
 
     @Column(nullable = false)
-    @Min(0)
-    @Max(100_000_000 - 1)
     private Integer quantity;
 
     @ManyToOne(optional = false)
@@ -43,14 +41,14 @@ public class ProductOption extends HardDeleteEntity {
     public ProductOption(Long id, String name, Integer quantity, Product product) {
         this.id = id;
         this.name = name;
-        this.quantity = quantity;
+        setQuantity(quantity);
         this.product = product;
     }
 
     // 생성자로 들어오는 값은 RequestDto에서 Validation 수행 상정
     public ProductOption(String name, Integer quantity, Product product) {
         this.name = name;
-        this.quantity = quantity;
+        setQuantity(quantity);
         this.product = product;
     }
 
@@ -63,7 +61,7 @@ public class ProductOption extends HardDeleteEntity {
             this.name = name;
         }
         if (quantity != null) {
-            this.quantity = quantity;
+            setQuantity(quantity);
         }
     }
 
