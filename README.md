@@ -1,6 +1,9 @@
 # spring-gift-order
 
 ## Step0
+<details>
+<summary>Click to view details</summary>
+
 ### implementation
 #### [feat]
 - import previous features
@@ -21,24 +24,29 @@
     - JPA Auditing 적용
       - ThreadLocal 활용 유저정보 저장 및 활용
       - 기존 Soft Delete를 `deleted` 컬럼으로 수행하던 방법을 `deletedAt`의 nullable 검사로 대체
+</details>
 
-## TODO
-### With Step1
-
+## Step1
+### implementation
 #### [fix]
-- Entity 필드의 `Min`, `Max` 어노테이션 제거
+- [ ] Entity 필드의 `Min`, `Max` 어노테이션 제거
 
 #### [refactor]
-- ProductOptionRepository의 미사용 메소드 제거
-- JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
+- [ ] ProductOptionRepository의 미사용 메소드 제거
+- [ ] JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
   - 위험성(순환참조 등), 복잡성, 의존성 낮추기 위한 조치
-- LoginMemberArgumentResolver에서 ThreadLocal 활용한 id 추출
+- [ ] LoginMemberArgumentResolver에서 ThreadLocal 활용한 id 추출
   - JPA Auditing 과정에서 추출한 memberId를 AuthService에 전달하여, 검증과정을 생략하고 곧바로 Member 객체 조회
-- ThreadLocal set/clear 부의 try-finally로 감싸기
-- HardDeleteEntity 삭제
+- [ ] ThreadLocal set/clear 부의 try-finally로 감싸기
+- [ ] HardDeleteEntity 삭제
   - 불필요한 복잡성 감소 (현재 HardDeleteEntity는 역할 없음)
   - 해당 엔티티를 상속한 엔티티들은 BaseAuditingEntity를 직접 상속하도록 변경
 
+#### [feat]
+- [ ] 카카오 로그인 구현
+  - Controller, Service 생성 및 구축
+
+## TODO
 ### Whenever is ready
 #### [feat]
 - 상품 옵션 관리 Admin Page 구현
