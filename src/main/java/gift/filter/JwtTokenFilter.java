@@ -25,16 +25,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         String token = Optional.ofNullable(getTokenFromCookies(request))
                 .orElse(getTokenFromAuthorizationHeader(request));
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            LoginMemberContextHolder.set(jwtTokenProvider.getId(token));
-            request.setAttribute("username", jwtTokenProvider.getEmail(token));
-            request.setAttribute("role", jwtTokenProvider.getRole(token));
-        } else {
-            request.setAttribute("username", null);
-            request.setAttribute("role", null);
+        try {
+            if (token != null && jwtTokenProvider.validateToken(token)) {
+                LoginMemberContextHolder.set(jwtTokenProvider.getId(token));
+                request.setAttribute("username", jwtTokenProvider.getEmail(token));
+                request.setAttribute("role", jwtTokenProvider.getRole(token));
+            } else {
+                request.setAttribute("username", null);
+                request.setAttribute("role", null);
+            }
+            chain.doFilter(request, response);
+        } finally {
+            LoginMemberContextHolder.clear();
         }
-        chain.doFilter(request, response);
-        LoginMemberContextHolder.clear();
     }
 
     private String getTokenFromCookies(HttpServletRequest request) {
