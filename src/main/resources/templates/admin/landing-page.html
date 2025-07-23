@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-3">Welcome to the Admin Panel</h1>
+    <h2 th:if="${username != null}" th:text="'Current User: ' + ${username}" class="h4">Current User</h2>
+    <h2 th:if="${role != null}" th:text="'Current Role: ' + ${role}" class="h4">Current Role</h2>
+    <br>
+    <form th:if="${role == null}" th:action="@{/admin/login}" method="get" style="display:inline-block">
+        <button type="submit" class="btn btn-dark">Login as Admin</button>
+    </form>
+    <form th:if="${role != null}" th:action="@{/admin/logout}" method="post" style="display:inline-block;">
+        <button type="submit" class="btn btn-dark">Logout</button>
+    </form>
+    <br>
+    <a th:if="${role == 'ROLE_MD'}" href="/admin/products" class="btn btn-success mt-2">Go to Product Management</a>
+    <a th:if="${role == 'ROLE_ADMIN'}" href="/admin/members" class="btn btn-primary mt-2">Go to Member Management</a>
+</div>
+</body>
+</html>

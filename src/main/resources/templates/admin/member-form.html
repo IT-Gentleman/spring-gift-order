@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 작성</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            margin-top: 20px;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-3">회원정보 작성</h1>
+    <h2 th:if="${memberId == null}" class="h4">- 신규 회원</h2>
+    <form th:action="${memberId == null} ? @{/admin/members} : @{/admin/members/{id}(id=${memberId})}" method="post" th:object="${member}">
+        <input type="hidden" name="_method" value="put" th:if="${memberId != null}" />
+        <div class="form-group" th:if="${memberId != null}">
+            <label for="id">ID:</label>
+            <input type="text" id="id" th:field="*{id}" class="form-control" readonly="readonly" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" th:field="*{email}" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" th:if="${memberId == null}" placeholder="비밀번호는 15자 이상 64자 이내로 작성하십시오" />
+            <div class="form-check" th:if="${memberId != null}">
+                <input type="checkbox" id="resetPassword" th:field="*{resetPassword}" class="form-check-input" />
+                <label for="resetPassword" class="form-check-label">비밀번호 초기화 요청 (초기화된 비밀번호는 팝업으로 제공됩니다)</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" th:field="*{role}" class="form-control">
+                <option th:each="roleValue : ${T(gift.entity.Role).values()}" th:value="${roleValue}" th:text="${roleValue}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" th:if="${memberId == null}">Create</button>
+        <button type="submit" class="btn btn-primary" th:if="${memberId != null}">Apply Changes</button>
+    </form>
+    <div class="mt-3">
+        <form th:if="${memberId != null}" th:action="@{/admin/members/{id}(id=${memberId})}" method="post" style="display:inline" onsubmit="return confirm('Are you sure to delete?');">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <a href="/admin/members" class="btn btn-secondary">Go to Member List</a>
+    </div>
+</div>
+<script th:if="${message}" th:inline="javascript">
+    /*<![CDATA[*/
+    alert([[${message}]]);
+    /*]]>*/
+</script>
+</body>
+</html>
