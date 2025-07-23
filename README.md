@@ -31,7 +31,7 @@
 #### [refactor]
 - [x] Entity 필드의 `Min`, `Max` 어노테이션 제거
   - flush 시점에 어노테이션이 검증되기는 하나, set시점에 명시적으로 검증하도록 변경
-- [ ] ProductOptionRepository의 미사용 메소드 제거
+- [x] ProductOptionRepository의 미사용 메소드 제거
 - [ ] JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
   - 위험성(순환참조 등), 복잡성, 의존성 낮추기 위한 조치
 - [ ] LoginMemberArgumentResolver에서 ThreadLocal 활용한 id 추출
