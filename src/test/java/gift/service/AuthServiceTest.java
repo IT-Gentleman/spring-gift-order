@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 import gift.config.AuditingTestConfig;
-import gift.dto.LoginCommand;
+import gift.dto.auth.LoginCommand;
 import gift.entity.Member;
 import gift.entity.Role;
 import gift.exception.InvalidCredentialsException;
@@ -24,7 +24,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.server.ResponseStatusException;
 
 @ExtendWith(MockitoExtension.class)
 @Import(AuditingTestConfig.class)

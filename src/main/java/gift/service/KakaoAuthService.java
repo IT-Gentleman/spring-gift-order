@@ -1,12 +1,11 @@
 package gift.service;
 
-import gift.dto.KakaoMemberResponse;
-import gift.dto.KakaoTokenCommand;
-import gift.dto.KakaoTokenResponse;
+import gift.dto.auth.KakaoMemberResponse;
+import gift.dto.auth.KakaoTokenCommand;
+import gift.dto.auth.KakaoTokenResponse;
 import gift.entity.Member;
 import gift.repository.MemberRepository;
 import gift.token.JwtTokenProvider;
-import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

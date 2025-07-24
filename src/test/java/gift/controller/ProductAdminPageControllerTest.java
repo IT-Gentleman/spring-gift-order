@@ -11,7 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import gift.dto.ProductDto;
+import gift.controller.product.ProductAdminPageController;
+import gift.dto.product.ProductDto;
 import gift.entity.Product;
 import gift.handler.LoginMemberArgumentResolver;
 import gift.service.ProductService;

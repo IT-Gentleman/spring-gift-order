@@ -5,9 +5,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import gift.config.AuditingTestConfig;
-import gift.dto.AddProductOptionRequest;
-import gift.dto.PatchProductOptionRequest;
-import gift.dto.ProductOptionResponse;
+import gift.dto.product.AddProductOptionRequest;
+import gift.dto.product.PatchProductOptionRequest;
+import gift.dto.product.ProductOptionResponse;
 import gift.entity.Member;
 import gift.entity.Product;
 import gift.entity.ProductOption;

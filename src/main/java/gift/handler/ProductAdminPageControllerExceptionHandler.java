@@ -1,6 +1,6 @@
 package gift.handler;
 
-import gift.controller.ProductAdminPageController;
+import gift.controller.product.ProductAdminPageController;
 import gift.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.annotation.Order;

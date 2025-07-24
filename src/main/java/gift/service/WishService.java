@@ -1,7 +1,7 @@
 package gift.service;
 
-import gift.dto.NewWishCommand;
-import gift.dto.WishDto;
+import gift.dto.wish.NewWishCommand;
+import gift.dto.wish.WishDto;
 import gift.entity.Member;
 import gift.entity.Product;
 import gift.entity.Wish;

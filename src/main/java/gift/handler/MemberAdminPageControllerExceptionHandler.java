@@ -1,6 +1,6 @@
 package gift.handler;
 
-import gift.controller.MemberAdminPageController;
+import gift.controller.member.MemberAdminPageController;
 import gift.exception.ConflictException;
 import gift.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;

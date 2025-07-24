@@ -44,6 +44,10 @@
 #### [feat]
 - [x] 카카오 로그인 구현
 
+#### [chore]
+- [x] Controller와 Dto 내부 패키지 분리
+  - 가독성 향상 목적
+
 ## TODO
 ### Whenever is ready
 #### [feat]

@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import gift.dto.NewWishCommand;
-import gift.dto.WishDto;
+import gift.dto.wish.NewWishCommand;
+import gift.dto.wish.WishDto;
 import gift.entity.Member;
 import gift.entity.Product;
 import gift.entity.Role;

@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import gift.config.AuditingTestConfig;
-import gift.dto.LoginRequest;
-import gift.dto.LoginResponse;
-import gift.dto.RegisterMemberRequest;
-import gift.dto.RegisterMemberResponse;
+import gift.dto.auth.LoginRequest;
+import gift.dto.auth.LoginResponse;
+import gift.dto.auth.RegisterRequest;
+import gift.dto.auth.RegisterResponse;
 import gift.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,14 +57,14 @@ class AuthE2ETest {
         @Test
         @DisplayName("POST /api/members/register - 유효한 정보 입력 시 201 CREATED")
         void 유효한_정보_입력_시_201_CREATED() {
-            RegisterMemberRequest request = new RegisterMemberRequest("test@example.com",
+            RegisterRequest request = new RegisterRequest("test@example.com",
                     "password123456789");
 
-            ResponseEntity<RegisterMemberResponse> response = restClient.post()
+            ResponseEntity<RegisterResponse> response = restClient.post()
                     .uri(url)
                     .body(request)
                     .retrieve()
-                    .toEntity(RegisterMemberResponse.class);
+                    .toEntity(RegisterResponse.class);
 
             assertAll(
                     () -> assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED),
@@ -75,7 +75,7 @@ class AuthE2ETest {
         @Test
         @DisplayName("POST /api/members/register - 이메일 중복 시 409 CONFLICT")
         void 이메일_중복_시_409_CONFLICT() {
-            RegisterMemberRequest request = new RegisterMemberRequest("existing@example.com",
+            RegisterRequest request = new RegisterRequest("existing@example.com",
                     "password123456789");
 
             // 먼저 회원가입을 수행
@@ -98,7 +98,7 @@ class AuthE2ETest {
         @Test
         @DisplayName("POST /api/members/register - 비밀번호 길이 부족 시 400 BAD_REQUEST")
         void 비밀번호_길이_부족_시_400_BAD_REQUEST() {
-            RegisterMemberRequest request = new RegisterMemberRequest("test@example.com",
+            RegisterRequest request = new RegisterRequest("test@example.com",
                     "password");
             assertThatExceptionOfType(HttpClientErrorException.class)
                     .isThrownBy(() -> restClient.post()
@@ -113,7 +113,7 @@ class AuthE2ETest {
         @Test
         @DisplayName("POST /api/members/register - 잘못된 이메일 형식 시 400 BAD_REQUEST")
         void 잘못된_이메일_형식_시_400_BAD_REQUEST() {
-            RegisterMemberRequest request = new RegisterMemberRequest("invalid-email",
+            RegisterRequest request = new RegisterRequest("invalid-email",
                     "password123456789");
             assertThatExceptionOfType(HttpClientErrorException.class)
                     .isThrownBy(() -> restClient.post()
@@ -138,7 +138,7 @@ class AuthE2ETest {
         @BeforeEach
         void setUp() {
             // 테스트를 위해 유효한 회원을 먼저 생성
-            RegisterMemberRequest createRequest = new RegisterMemberRequest(userEmail,
+            RegisterRequest createRequest = new RegisterRequest(userEmail,
                     userPassword);
             restClient.post()
                     .uri(registerUrl)

@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import gift.config.AuditingTestConfig;
-import gift.dto.AddWishRequest;
-import gift.dto.PageResponse;
-import gift.dto.WishResponse;
+import gift.dto.wish.AddWishRequest;
+import gift.dto.common.PageResponse;
+import gift.dto.wish.WishResponse;
 import gift.entity.Member;
 import gift.entity.Product;
 import gift.entity.Role;

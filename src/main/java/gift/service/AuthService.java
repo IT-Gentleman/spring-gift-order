@@ -1,7 +1,7 @@
 package gift.service;
 
-import gift.dto.AuthenticatedMember;
-import gift.dto.LoginCommand;
+import gift.dto.common.AuthenticatedMember;
+import gift.dto.auth.LoginCommand;
 import gift.entity.Member;
 import gift.exception.InvalidCredentialsException;
 import gift.repository.MemberRepository;

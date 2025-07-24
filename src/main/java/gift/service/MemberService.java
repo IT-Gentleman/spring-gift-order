@@ -1,8 +1,8 @@
 package gift.service;
 
-import gift.dto.MemberDto;
-import gift.dto.NewMemberCommand;
-import gift.dto.UpdateMemberCommand;
+import gift.dto.member.MemberDto;
+import gift.dto.member.NewMemberCommand;
+import gift.dto.member.UpdateMemberCommand;
 import gift.entity.Member;
 import gift.exception.ConflictException;
 import gift.exception.NotFoundException;

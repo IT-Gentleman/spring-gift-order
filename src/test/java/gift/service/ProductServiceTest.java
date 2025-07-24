@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import gift.dto.NewProductCommand;
-import gift.dto.ProductDto;
+import gift.dto.product.NewProductCommand;
+import gift.dto.product.ProductDto;
+import gift.dto.product.NewProductOptionCommand;
 import gift.entity.Product;
 import gift.exception.NotFoundException;
 import gift.repository.ProductRepository;
@@ -39,7 +40,7 @@ class ProductServiceTest {
             Integer price = 10000;
             String imageUrl = "http://example.com/image.jpg";
             var options = java.util.List.of(
-                    new gift.dto.NewProductOptionCommand("Option 1", 10, null));
+                    new NewProductOptionCommand("Option 1", 10, null));
             Product expectedProduct = new Product(1L, name, price, imageUrl, false, false);
             when(productRepository.save(any(Product.class))).thenReturn(expectedProduct);
 
