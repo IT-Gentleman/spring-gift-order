@@ -43,6 +43,7 @@
 
 #### [feat]
 - [x] 카카오 로그인 구현
+- [x] 카카오 로그인(Auth) 간 에러발생 Handling 구현
 
 #### [chore]
 - [x] Controller와 Dto 내부 패키지 분리
@@ -58,6 +59,7 @@
   - `Version` 어노테이션을 가진 필드 추가를 통한 낙관적 Locking이 가능해보임
   - 이 구현방법 사용 시, Service 레이어에서 최대 N회 재시도하는 로직 구현 필요
 - Entity 단위테스트 추가
+- Kakao Auth 요청/응답확인 간 state 사용을 통한 CSRF 방지
 
 ### Wondering to apply
 #### [refactor]

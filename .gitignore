@@ -39,3 +39,4 @@ out/
 ### Mac OS ###
 .DS_Store
 /src/main/resources/application-secret.yml
+/src/test/resources/application-secret.yml
