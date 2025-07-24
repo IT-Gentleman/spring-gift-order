@@ -34,7 +34,7 @@
 - [x] ProductOptionRepository의 미사용 메소드 제거
 - [ ] JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
   - 위험성(순환참조 등), 복잡성, 의존성 낮추기 위한 조치
-- [ ] LoginMemberArgumentResolver에서 ThreadLocal 활용한 id 추출
+- [x] LoginMemberArgumentResolver에서 ThreadLocal 활용한 id 추출
   - JPA Auditing 과정에서 추출한 memberId를 AuthService에 전달하여, 검증과정을 생략하고 곧바로 Member 객체 조회
 - [x] ThreadLocal set/clear 부의 try-finally로 감싸기
 - [x] HardDeleteEntity 삭제

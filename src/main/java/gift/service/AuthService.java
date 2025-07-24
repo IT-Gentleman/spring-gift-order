@@ -36,14 +36,13 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public AuthenticatedMember getAuthenticationFromToken(String token) {
-        if (token == null || !jwtTokenProvider.validateToken(token)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
+    public AuthenticatedMember getAuthenticationFromMemberId(Long memberId) {
+        if (memberId == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Member ID is null");
         }
-        Long memberId = jwtTokenProvider.getId(token);
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         if (optionalMember.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Member not found");
         }
         return AuthenticatedMember.from(optionalMember.get());
     }

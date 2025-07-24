@@ -105,45 +105,4 @@ public class AuthServiceTest {
             }
         }
     }
-
-
-    @Nested
-    @DisplayName("Member getAuthenticationFromToken() - 토큰으로 인증 정보 조회 테스트")
-    class GetAuthenticationFromTokenTests {
-
-        @Test
-        @DisplayName("유효한 토큰으로 인증 정보 조회")
-        void 유효한_토큰으로_인증정보조회() {
-            String username = "email@email.com";
-            String token = "validToken";
-            Member member = new Member(1L, "email", "hashedPassword", Role.ROLE_USER);
-            when(jwtTokenProvider.validateToken(token)).thenReturn(true);
-            when(jwtTokenProvider.getId(token)).thenReturn(member.getId());
-            when(memberRepository.findById(member.getId())).thenReturn(
-                    Optional.of(member));
-            assertThat(authService.getAuthenticationFromToken(token)).isNotNull();
-        }
-
-        @Test
-        @DisplayName("유효하지 않은 토큰으로 인증 정보 조회 시 예외 발생")
-        void 유효하지_않은_토큰으로_인증정보조회시_예외발생() {
-            String token = "validToken";
-            when(jwtTokenProvider.validateToken(token)).thenReturn(false);
-            assertThrows(ResponseStatusException.class,
-                    () -> authService.getAuthenticationFromToken(token));
-        }
-
-        @Test
-        @DisplayName("유효한 토큰이지만 회원 정보가 없는 경우 예외 발생")
-        void 유효한_토큰이지만_회원정보가_없는_경우_예외발생() {
-            String username = "deletedMember@email.com";
-            String token = "validToken";
-            when(jwtTokenProvider.validateToken(token)).thenReturn(true);
-            when(jwtTokenProvider.getId(token)).thenReturn(null);
-            when(memberRepository.findById(any())).thenReturn(
-                    Optional.empty());
-            assertThrows(ResponseStatusException.class,
-                    () -> authService.getAuthenticationFromToken(token));
-        }
-    }
 }
