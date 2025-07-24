@@ -42,8 +42,7 @@
   - 해당 엔티티를 상속한 엔티티들은 BaseAuditingEntity를 직접 상속하도록 변경
 
 #### [feat]
-- [ ] 카카오 로그인 구현
-  - Controller, Service 생성 및 구축
+- [x] 카카오 로그인 구현
 
 ## TODO
 ### Whenever is ready

@@ -15,4 +15,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     boolean existsByEmail(String email);
 
     Page<Member> findAllByDeletedAtIsNull(Pageable pageable);
+
+    Optional<Member> findByKakaoId(Long kakaoId);
 }

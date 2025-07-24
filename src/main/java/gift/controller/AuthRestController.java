@@ -18,15 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthRestController {
 
     private final MemberService memberService;
     private final AuthService authService;
 
-    public AuthController(MemberService memberService, AuthService authService) {
+    public AuthRestController(MemberService memberService, AuthService authService) {
         this.memberService = memberService;
         this.authService = authService;
     }
+
+    // 카카오 로그인 시, 회원가입과 로그인 절차를 통합하는 특성을 활용하여
+    // 기존에 `register`와 `login`을 분리한 것을 통합하여 `kakao-login`으로 변경하도록 함
 
     @PostMapping("/register")
     public ResponseEntity<RegisterMemberResponse> createMember(

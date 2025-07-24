@@ -26,11 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/products/{productId}/options")
-public class ProductOptionController {
+public class ProductOptionRestController {
 
     private final ProductOptionService productOptionService;
 
-    public ProductOptionController(ProductOptionService productOptionService) {
+    public ProductOptionRestController(ProductOptionService productOptionService) {
         this.productOptionService = productOptionService;
     }
 

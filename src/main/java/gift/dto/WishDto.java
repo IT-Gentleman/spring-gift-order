@@ -3,7 +3,7 @@ package gift.dto;
 import gift.entity.Wish;
 import java.time.LocalDateTime;
 
-// WishService -> WishController
+// WishService -> WishRestController
 public record WishDto(
         Long id,
         Long productId,
