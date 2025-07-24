@@ -24,14 +24,12 @@ public abstract class BaseAuditingEntity {
     protected LocalDateTime updatedAt;
 
     @CreatedBy
-    @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
     @JoinColumn(name = "created_by_id", updatable = false)
-    protected Member createdBy;
+    protected Long createdById;
 
     @LastModifiedBy
-    @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
     @JoinColumn(name = "updated_by_id")
-    protected Member updatedBy;
+    protected Long updatedById;
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -41,11 +39,11 @@ public abstract class BaseAuditingEntity {
         return updatedAt;
     }
 
-    public Member getCreatedBy() {
-        return createdBy;
+    public Long getCreatedById() {
+        return createdById;
     }
 
-    public Member getUpdatedBy() {
-        return updatedBy;
+    public Long getUpdatedById() {
+        return updatedById;
     }
 }

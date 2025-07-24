@@ -8,21 +8,10 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
 @Component("threadLocalAuditorAware")
-public class ThreadLocalAuditorAware implements AuditorAware<Member> {
-
-    private final MemberRepository memberRepository;
-
-    public ThreadLocalAuditorAware(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+public class ThreadLocalAuditorAware implements AuditorAware<Long> {
 
     @Override
-    public Optional<Member> getCurrentAuditor() {
-        Long userId = LoginMemberContextHolder.get();
-        if (userId == null) {
-            return Optional.empty();
-        }
-        return memberRepository.findById(userId);
-        //return Optional.of(Member.emptyOfId(userId));
+    public Optional<Long> getCurrentAuditor() {
+        return Optional.ofNullable(LoginMemberContextHolder.get());
     }
 }

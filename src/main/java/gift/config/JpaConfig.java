@@ -11,14 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class JpaConfig {
 
-    private final MemberRepository memberRepository;
-
-    public JpaConfig(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
-
     @Bean
-    public AuditorAware<Member> auditorAware() {
-        return new ThreadLocalAuditorAware(memberRepository);
+    public AuditorAware<Long> auditorAware() {
+        return new ThreadLocalAuditorAware();
     }
 }
