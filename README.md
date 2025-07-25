@@ -1,5 +1,14 @@
 # spring-gift-order
 
+## before use (or review)
+- `src/main/resources/` 밑의 `application-secret.yml` 파일을 생성하여, 아래와 같은 내용을 채워주세요.
+```yaml
+kakao:
+  client-id: write-your-kakao-client-id-here
+```
+- 이 양식은 `application-secret.yml.example` 파일을 복사하여 사용하여도 무방합니다.
+- 해당 파일은 `.gitignore`에 포함되어 있어, GitHub에 업로드되지 않습니다.
+
 ## Step0
 <details>
 <summary>Click to view details</summary>
@@ -57,7 +66,7 @@
   - 카카오 서버와의 통신이 필요한 부분은 Mocking을 통해 테스트 진행
 
 #### [docs]
-- [ ] application-secret.yml 파일에 대한 설명 추가
+- [x] application-secret.yml 파일에 대한 설명 추가
 
 ## TODO
 ### Whenever is ready
