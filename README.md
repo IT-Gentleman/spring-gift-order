@@ -58,7 +58,7 @@ kakao:
 #### [feat]
 - [x] 카카오 로그인 구현
 - [x] 카카오 로그인(Auth) 간 에러발생 Handling 구현
-- [ ] 카카오서버로의 Request timeout 정책 적용
+- [x] 카카오서버로의 Request timeout 정책 적용
 
 #### [chore]
 - [x] Controller와 Dto 내부 패키지 분리
