@@ -1,6 +1,6 @@
 package gift.handler;
 
-import gift.dto.ErrorResponse;
+import gift.dto.common.ErrorResponse;
 import gift.exception.BadRequestException;
 import gift.exception.ConflictException;
 import gift.exception.InvalidCredentialsException;

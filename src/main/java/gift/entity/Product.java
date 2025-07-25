@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,16 +28,20 @@ public class Product extends SoftDeleteEntity {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private String name;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private Integer price;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url")
+    @NotNull
     private String imageUrl;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private Boolean validated;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)

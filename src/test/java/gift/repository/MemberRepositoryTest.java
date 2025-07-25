@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gift.entity.Member;
 import gift.entity.Role;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -74,23 +75,23 @@ class MemberRepositoryTest {
             // identifyNumber는 항상 null인 상태로 삽입되어야 함
 
             Member allNullMember = new Member(null, null, null, null);
-            assertThatExceptionOfType(DataIntegrityViolationException.class)
+            assertThatExceptionOfType(ConstraintViolationException.class)
                     .isThrownBy(() -> memberRepository.save(allNullMember));
 
             Member emailNullMember = new Member(null, null, "encryptedPasswordByBCryptEncryptor",
                     Role.ROLE_USER);
-            assertThatExceptionOfType(DataIntegrityViolationException.class)
+            assertThatExceptionOfType(ConstraintViolationException.class)
                     .isThrownBy(() -> memberRepository.save(emailNullMember));
             new Member(null, "example@email.com", "encryptedPasswordByBCryptEncryptor",
                     Role.ROLE_USER);
 
             Member passwordNullMember = new Member(null, "example@email.com", null, Role.ROLE_USER);
-            assertThatExceptionOfType(DataIntegrityViolationException.class)
+            assertThatExceptionOfType(ConstraintViolationException.class)
                     .isThrownBy(() -> memberRepository.save(passwordNullMember));
 
             Member authorityNullMember = new Member(null, "example@email.com",
                     "encryptedPasswordByBCryptEncryptor", null);
-            assertThatExceptionOfType(DataIntegrityViolationException.class)
+            assertThatExceptionOfType(ConstraintViolationException.class)
                     .isThrownBy(() -> memberRepository.save(authorityNullMember));
         }
     }

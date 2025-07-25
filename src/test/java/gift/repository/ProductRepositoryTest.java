@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gift.config.AuditingTestConfig;
 import gift.entity.Product;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -66,27 +67,27 @@ class ProductRepositoryTest {
             // id는 항상 null인 상태로 삽입되어야 함
 
             Product allNullProduct = new Product(null, null, null, null, null, null);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> productRepository.save(allNullProduct));
 
             Product nameNullProduct = new Product(null, null, 5000, "http://kakao.com", true,
                     false);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> productRepository.save(nameNullProduct));
 
             Product priceNullProduct = new Product(null, "Test Product", null, "http://kakao.com",
                     true, false);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> productRepository.save(priceNullProduct));
 
             Product imageUrlNullProduct = new Product(null, "Test Product", 5000, null, true,
                     false);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> productRepository.save(imageUrlNullProduct));
 
             Product validatedNullProduct = new Product(null, "Test Product", 5000,
                     "http://kakao.com", null, false);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> productRepository.save(validatedNullProduct));
         }
     }

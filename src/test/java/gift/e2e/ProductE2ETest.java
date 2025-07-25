@@ -5,10 +5,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import gift.config.AuditingTestConfig;
-import gift.dto.CreateProductRequest;
-import gift.dto.PageResponse;
-import gift.dto.ProductResponse;
-import gift.dto.UpdateProductRequest;
+import gift.dto.product.CreateProductRequest;
+import gift.dto.common.PageResponse;
+import gift.dto.product.ProductResponse;
+import gift.dto.product.UpdateProductRequest;
+import gift.dto.product.AddProductOptionRequest;
 import gift.entity.Member;
 import gift.entity.Product;
 import gift.entity.Role;
@@ -77,7 +78,7 @@ public class ProductE2ETest {
         @Test
         @DisplayName("POST /api/products - 유효한 생성 시 201 CREATED")
         void 유효한_생성_시_201_CREATED() {
-            var options = java.util.List.of(new gift.dto.AddProductOptionRequest("Option 1", 10));
+            var options = java.util.List.of(new AddProductOptionRequest("Option 1", 10));
             CreateProductRequest requestDto = new CreateProductRequest(
                     "아이스 카페 아메리카노 T",
                     4700,

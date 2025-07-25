@@ -8,9 +8,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
-import gift.dto.MemberDto;
-import gift.dto.NewMemberCommand;
-import gift.dto.UpdateMemberCommand;
+import gift.dto.member.MemberDto;
+import gift.dto.member.NewMemberCommand;
+import gift.dto.member.UpdateMemberCommand;
 import gift.entity.Member;
 import gift.entity.Role;
 import gift.exception.ConflictException;

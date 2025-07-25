@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -18,22 +19,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
         @UniqueConstraint(columnNames = {"product_id", "name"}),
 })
 @EntityListeners(AuditingEntityListener.class)
-public class ProductOption extends HardDeleteEntity {
+public class ProductOption extends BaseAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private String name;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     @Min(0)
-    @Max(100_000_000 - 1)
+    @Max(100_000_000-1)
     private Integer quantity;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
+    @NotNull
     private Product product;
 
     protected ProductOption() {
@@ -63,15 +67,11 @@ public class ProductOption extends HardDeleteEntity {
             this.name = name;
         }
         if (quantity != null) {
-            this.quantity = quantity;
+            setQuantity(quantity);
         }
     }
 
     public void setQuantity(Integer quantity) {
-        if (quantity == null || quantity < 0 || quantity >= 100_000_000) {
-            throw new IllegalArgumentException(
-                    "Quantity must be between 0 (inclusive) and 100,000,000 (exclusive).");
-        }
         this.quantity = quantity;
     }
 

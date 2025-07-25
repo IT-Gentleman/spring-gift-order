@@ -14,3 +14,8 @@ spring:
 jwt:
   secret-key: bXktcHJpdmF0ZS1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tMzItYnl0ZXMtbGVuZ3RoLXNlY3VyZS1rZXktZm9yLWpqd3Q=
   expire-length-ms: 3600000
+
+kakao:
+  client-id: 테스트 과정에서는 사용되지 않음
+
+uri: http://localhost:8080 # 테스트에서 사용할 때는 적절히 수정하여 사용해야할듯

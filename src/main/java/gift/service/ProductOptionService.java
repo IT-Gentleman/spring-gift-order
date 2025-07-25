@@ -1,8 +1,8 @@
 package gift.service;
 
-import gift.dto.NewProductOptionCommand;
-import gift.dto.ProductOptionDto;
-import gift.dto.UpdateProductOptionCommand;
+import gift.dto.product.NewProductOptionCommand;
+import gift.dto.product.ProductOptionDto;
+import gift.dto.product.UpdateProductOptionCommand;
 import gift.entity.Product;
 import gift.entity.ProductOption;
 import gift.exception.NotFoundException;

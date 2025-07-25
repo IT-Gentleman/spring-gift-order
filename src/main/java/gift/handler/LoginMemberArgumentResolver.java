@@ -1,6 +1,7 @@
 package gift.handler;
 
 import gift.service.AuthService;
+import gift.util.LoginMemberContextHolder;
 import gift.validator.LoginMember;
 import java.util.Optional;
 import org.springframework.core.MethodParameter;
@@ -32,14 +33,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
             NativeWebRequest webRequest,
             WebDataBinderFactory binderFactory
     ) throws Exception {
-        //LoginMember loginMember = parameter.getParameterAnnotation(LoginMember.class);
-
-        String authority = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authority == null || !authority.startsWith("Bearer ") || Optional.ofNullable(
-                authority.split("Bearer ")[1]).isEmpty()) {
-            throw new IllegalArgumentException("Invalid or missing authorization header");
-        }
-        String token = authority.split("Bearer ")[1].trim();
-        return authService.getAuthenticationFromToken(token);
+        return authService.getAuthenticationFromMemberId(LoginMemberContextHolder.get());
     }
 }

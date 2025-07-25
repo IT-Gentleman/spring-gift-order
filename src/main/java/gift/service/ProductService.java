@@ -1,8 +1,8 @@
 package gift.service;
 
-import gift.dto.NewProductCommand;
-import gift.dto.ProductDto;
-import gift.dto.UpdateProductCommand;
+import gift.dto.product.NewProductCommand;
+import gift.dto.product.ProductDto;
+import gift.dto.product.UpdateProductCommand;
 import gift.entity.Product;
 import gift.entity.ProductOption;
 import gift.exception.BadRequestException;

@@ -1,5 +1,8 @@
 package gift.entity;
 
+import static gift.util.BCryptEncryptor.encrypt;
+import static gift.util.PasswordUtility.generateRandomPassword;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -7,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -19,14 +23,20 @@ public class Member extends SoftDeleteEntity {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
+    @NotNull
     private String email;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private String password;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private Role role;
+
+    @Column(unique = true)
+    private Long kakaoId;
 
     @OneToMany(mappedBy = "member")
     private List<Wish> wishList;
@@ -49,9 +59,22 @@ public class Member extends SoftDeleteEntity {
         this.role = role;
     }
 
+    // constructor for kakao member creation. Use as a factory method
+    public Member(Long kakaoId, Role role) {
+        this.email = kakaoId + "@kakao";
+        this.password = encrypt(generateRandomPassword());
+        this.kakaoId = kakaoId;
+        this.role = role;
+    }
+
     // constructor for member creation with default role as ROLE_USER (for api)
     public Member(String email, String password) {
         this(email, password, Role.ROLE_USER);
+    }
+
+    // constructor for kakao member creation with default role as ROLE_USER
+    public Member(Long kakaoId) {
+        this(kakaoId, Role.ROLE_USER);
     }
 
     public Long getId() {
@@ -92,12 +115,5 @@ public class Member extends SoftDeleteEntity {
         if (authority != null) {
             this.role = authority;
         }
-    }
-
-    // 순환참조를 방지하기 위해 사용
-    public static Member emptyOfId(Long id) {
-        Member member = new Member();
-        member.id = id;
-        return member;
     }
 }
