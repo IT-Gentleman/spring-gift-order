@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -22,13 +23,16 @@ public class Member extends SoftDeleteEntity {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
+    @NotNull
     private String email;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private String password;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private Role role;
 
     @Column(unique = true)

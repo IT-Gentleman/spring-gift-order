@@ -24,11 +24,11 @@ public abstract class BaseAuditingEntity {
     protected LocalDateTime updatedAt;
 
     @CreatedBy
-    @JoinColumn(name = "created_by_id", updatable = false)
+    @Column(name = "created_by_id", updatable = false)
     protected Long createdById;
 
     @LastModifiedBy
-    @JoinColumn(name = "updated_by_id")
+    @Column(name = "updated_by_id")
     protected Long updatedById;
 
     public LocalDateTime getCreatedAt() {

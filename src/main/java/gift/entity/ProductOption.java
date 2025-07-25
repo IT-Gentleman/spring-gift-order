@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -24,14 +25,19 @@ public class ProductOption extends BaseAuditingEntity {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private String name;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
+    @Min(0)
+    @Max(100_000_000-1)
     private Integer quantity;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
+    @NotNull
     private Product product;
 
     protected ProductOption() {
@@ -41,14 +47,14 @@ public class ProductOption extends BaseAuditingEntity {
     public ProductOption(Long id, String name, Integer quantity, Product product) {
         this.id = id;
         this.name = name;
-        setQuantity(quantity);
+        this.quantity = quantity;
         this.product = product;
     }
 
     // 생성자로 들어오는 값은 RequestDto에서 Validation 수행 상정
     public ProductOption(String name, Integer quantity, Product product) {
         this.name = name;
-        setQuantity(quantity);
+        this.quantity = quantity;
         this.product = product;
     }
 
@@ -66,10 +72,6 @@ public class ProductOption extends BaseAuditingEntity {
     }
 
     public void setQuantity(Integer quantity) {
-        if (quantity == null || quantity < 0 || quantity >= 100_000_000) {
-            throw new IllegalArgumentException(
-                    "Quantity must be between 0 (inclusive) and 100,000,000 (exclusive).");
-        }
         this.quantity = quantity;
     }
 

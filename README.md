@@ -38,10 +38,13 @@ kakao:
 ## Step1
 ### implementation
 #### [refactor]
-- [x] Entity 필드의 `Min`, `Max` 어노테이션 제거
-  - flush 시점에 어노테이션이 검증되기는 하나, set시점에 명시적으로 검증하도록 변경
-- [ ] Entity 필드에 Jakarta(Bean) Validation 어노테이션 추가
-  - Min, Max, NotNull 등
+- [x] ~~Entity 필드의 `Min`, `Max` 어노테이션 제거~~
+  - ~~flush 시점에 어노테이션이 검증되기는 하나, set시점에 명시적으로 검증하도록 변경~~
+- [x] Entity 리팩터링
+  - Entity 필드에 Jakarta(Bean) Validation 어노테이션 추가
+    - Min, Max, NotNull 등
+  - 중복 Auditing 컬럼 제거
+  - 더이상 Join을 사용하지 않는 컬럼에 대해서 JoinColumn 어노테이션 제거
 - [x] ProductOptionRepository의 미사용 메소드 제거
 - [x] JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
   - 위험성(순환참조 등), 복잡성, 의존성 낮추기 위한 조치
