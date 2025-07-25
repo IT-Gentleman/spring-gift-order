@@ -17,4 +17,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Page<Member> findAllByDeletedAtIsNull(Pageable pageable);
 
     Optional<Member> findByKakaoId(Long kakaoId);
+
+    Optional<Member> findByIdAndDeletedAtIsNull(Long memberId);
 }

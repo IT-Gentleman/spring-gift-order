@@ -68,9 +68,13 @@ kakao:
 #### [test]
 - [x] 카카오 로그인 관련 테스트 추가
   - 카카오 서버와의 통신이 필요한 부분은 Mocking을 통해 테스트 진행
+- [x] AuthService 테스트 추가
 
 #### [docs]
 - [x] application-secret.yml 파일에 대한 설명 추가
+
+#### [fix]
+- [x] soft deleted Member의 토큰을 가지고 Authentication을 수행하는것을 방지
 
 ## TODO
 ### Whenever is ready

@@ -40,7 +40,7 @@ public class AuthService {
         if (memberId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Member ID is null");
         }
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Optional<Member> optionalMember = memberRepository.findByIdAndDeletedAtIsNull(memberId);
         if (optionalMember.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Member not found");
         }
