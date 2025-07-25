@@ -24,7 +24,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             FilterChain chain) throws ServletException, IOException {
 
         String token = Optional.ofNullable(getTokenFromCookies(request))
-                .orElse(getTokenFromAuthorizationHeader(request));
+                .orElseGet(() -> getTokenFromAuthorizationHeader(request));
         try {
             if (token != null && jwtTokenProvider.validateToken(token)) {
                 LoginMemberContextHolder.set(jwtTokenProvider.getId(token));

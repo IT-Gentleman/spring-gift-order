@@ -1,5 +1,8 @@
 package gift.service;
 
+import static gift.util.HttpUtil.sendBodilessPost;
+import static gift.util.HttpUtil.sendPost;
+
 import gift.dto.auth.KakaoMemberResponse;
 import gift.dto.auth.KakaoTokenCommand;
 import gift.dto.auth.KakaoTokenResponse;
@@ -11,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,24 +42,22 @@ public class KakaoAuthService {
     }
 
     private KakaoTokenResponse getKakaoToken(KakaoTokenCommand command) {
-        ResponseEntity<KakaoTokenResponse> response = restClient.post()
-                .uri(command.uri())
-                .contentType(command.contentType())
-                .header("Charset", "UTF-8")
-                .body(command.getFormData())
-                .retrieve()
-                .toEntity(KakaoTokenResponse.class);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Charset", "UTF-8");
+        ResponseEntity<KakaoTokenResponse> response =
+                sendPost(restClient, command.uri(), command.contentType(), headers,
+                        command.getFormData(), KakaoTokenResponse.class);
         return getBodyOf(response);
     }
 
     private KakaoMemberResponse getKakaoMember(String accessToken) {
-        ResponseEntity<KakaoMemberResponse> response = restClient.post()
-                .uri("https://kapi.kakao.com/v2/user/me")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header("Authorization", "Bearer " + accessToken)
-                .header("Charset", "UTF-8")
-                .retrieve()
-                .toEntity(KakaoMemberResponse.class);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Charset", "UTF-8");
+        ResponseEntity<KakaoMemberResponse> response =
+                sendBodilessPost(restClient, "https://kapi.kakao.com/v2/user/me",
+                        MediaType.APPLICATION_FORM_URLENCODED,
+                        headers, KakaoMemberResponse.class);
         return getBodyOf(response);
     }
 
@@ -73,6 +76,6 @@ public class KakaoAuthService {
 
     private Member getMemberOrCreateFromKakaoId(Long kakaoId) {
         return memberRepository.findByKakaoId(kakaoId)
-                .orElse(memberRepository.save(new Member(kakaoId)));
+                .orElseGet(() -> memberRepository.save(new Member(kakaoId)));
     }
 }

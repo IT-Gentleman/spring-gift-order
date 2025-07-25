@@ -54,6 +54,7 @@ kakao:
 - [x] HardDeleteEntity 삭제
   - 불필요한 복잡성 감소 (현재 HardDeleteEntity는 역할 없음)
   - 해당 엔티티를 상속한 엔티티들은 BaseAuditingEntity를 직접 상속하도록 변경
+- [x] RestClient 호출부 Util화
 
 #### [feat]
 - [x] 카카오 로그인 구현
