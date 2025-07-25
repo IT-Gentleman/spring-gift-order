@@ -31,6 +31,8 @@
 #### [refactor]
 - [x] Entity 필드의 `Min`, `Max` 어노테이션 제거
   - flush 시점에 어노테이션이 검증되기는 하나, set시점에 명시적으로 검증하도록 변경
+- [ ] Entity 필드에 Jakarta(Bean) Validation 어노테이션 추가
+  - Min, Max, NotNull 등
 - [x] ProductOptionRepository의 미사용 메소드 제거
 - [x] JPA Auditing 과정에서 `Member` 객체를 직접 Auditor로 지정하지 않고, memberId(Long)를 사용하도록 함
   - 위험성(순환참조 등), 복잡성, 의존성 낮추기 위한 조치
@@ -44,10 +46,18 @@
 #### [feat]
 - [x] 카카오 로그인 구현
 - [x] 카카오 로그인(Auth) 간 에러발생 Handling 구현
+- [ ] 카카오서버로의 Request timeout 정책 적용
 
 #### [chore]
 - [x] Controller와 Dto 내부 패키지 분리
   - 가독성 향상 목적
+
+#### [test]
+- [ ] 카카오 로그인 관련 테스트 추가
+  - 카카오 서버와의 통신이 필요한 부분은 Mocking을 통해 테스트 진행
+
+#### [docs]
+- [ ] application-secret.yml 파일에 대한 설명 추가
 
 ## TODO
 ### Whenever is ready
