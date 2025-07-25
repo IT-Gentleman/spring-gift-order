@@ -8,7 +8,7 @@ public record WishResponse(
         String productName,
         String productImageUrl,
         Boolean deleted,
-        LocalDateTime addedAt
+        LocalDateTime createdAt
 ) {
 
     public static WishResponse from(WishDto wishDto) {
@@ -18,7 +18,7 @@ public record WishResponse(
                 wishDto.productName(),
                 wishDto.productImageUrl(),
                 wishDto.deleted(),
-                wishDto.addedAt()
+                wishDto.createdAt()
         );
     }
 }

@@ -10,7 +10,7 @@ public record WishDto(
         String productName,
         String productImageUrl,
         Boolean deleted,
-        LocalDateTime addedAt
+        LocalDateTime createdAt
 ) {
 
     public static WishDto from(Wish wish) {
@@ -20,7 +20,7 @@ public record WishDto(
                 wish.getProduct().getName(),
                 wish.getProduct().getImageUrl(),
                 wish.getProduct().isDeleted(),
-                wish.getAddedAt()
+                wish.getCreatedAt()
         );
     }
 }

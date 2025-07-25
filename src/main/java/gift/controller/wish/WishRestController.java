@@ -39,8 +39,8 @@ public class WishRestController {
             @Valid PageRequest pageRequest,
             @LoginMember AuthenticatedMember member
     ) {
-        Set<String> allowedSortFields = Set.of("addedAt", "product.name", "product.price");
-        String defaultSortField = "addedAt";
+        Set<String> allowedSortFields = Set.of("createdAt", "product.name", "product.price");
+        String defaultSortField = "createdAt";
         Sort.Direction defaultSortDirection = Sort.Direction.DESC;
         Pageable pageable = pageRequest.toPageable(allowedSortFields, defaultSortField,
                 defaultSortDirection);

@@ -80,6 +80,45 @@ public class ProductOptionRepositoryTest {
         }
     }
 
+    @Nested
+    @DisplayName("ProductOption 제약 조건 테스트")
+    class ConstraintValidationTest {
+
+        @DisplayName("유효한 수량 값(0, 1, 1억-1)으로 저장 성공")
+        @ParameterizedTest
+        @ValueSource(ints = {0, 1, 100_000_000 - 1})
+        void 유효한_수량_값으로_저장_성공(int quantity) {
+            // given
+            ProductOption productOption = new ProductOption("Valid Quantity Option", quantity,
+                    existingProduct);
+
+            // when
+            ProductOption savedOption = productOptionRepository.save(productOption);
+
+            // then
+            assertAll(
+                    () -> assertThat(savedOption).isNotNull(),
+                    () -> assertThat(savedOption.getId()).isNotNull(),
+                    () -> assertThat(savedOption.getName()).isEqualTo(productOption.getName()),
+                    () -> assertThat(savedOption.getProduct()).isEqualTo(existingProduct)
+            );
+        }
+
+        @DisplayName("유효하지 않은 수량 값(-1, 1억)으로 저장 시 예외 발생")
+        @ParameterizedTest
+        @ValueSource(ints = {-1, 100_000_000})
+        void 유효하지_않은_수량_값으로_저장_시_예외_발생(int quantity) {
+            // given
+            ProductOption productOption = new ProductOption("Invalid Quantity Option", quantity,
+                    existingProduct);
+
+            // when & then
+            assertThatExceptionOfType(ConstraintViolationException.class).isThrownBy(
+                    () -> productOptionRepository.saveAndFlush(productOption)
+            );
+        }
+    }
+
     private boolean productOptionDetailsEquals(ProductOption actual, ProductOption expected) {
         return actual.getName().equals(expected.getName())
                 && actual.getQuantity().equals(expected.getQuantity())

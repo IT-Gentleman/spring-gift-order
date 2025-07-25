@@ -9,6 +9,7 @@ import gift.entity.Member;
 import gift.entity.Product;
 import gift.entity.Role;
 import gift.entity.Wish;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -83,15 +84,15 @@ class WishRepositoryTest {
         void 널_값이_포함된_위시_아이템_삽입_시_예외_발생() {
 
             Wish allNullWish = new Wish(null, null);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> wishRepository.save(allNullWish));
 
             Wish memberNullWish = new Wish(null, existingProduct);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> wishRepository.save(memberNullWish));
 
             Wish productNullWish = new Wish(existingMember, null);
-            assertThrows(DataIntegrityViolationException.class,
+            assertThrows(ConstraintViolationException.class,
                     () -> wishRepository.save(productNullWish));
         }
 
