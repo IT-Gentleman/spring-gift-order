@@ -52,4 +52,12 @@ public class KakaoToken {
         this.id = member.getId();
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
 }

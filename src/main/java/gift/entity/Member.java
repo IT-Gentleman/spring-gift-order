@@ -110,6 +110,14 @@ public class Member extends SoftDeleteEntity {
         return password;
     }
 
+    public Long getKakaoId() {
+        return kakaoId;
+    }
+
+    public KakaoToken getKakaoToken() {
+        return kakaoToken;
+    }
+
     public void updateKakaoToken(KakaoToken kakaoToken) {
         this.kakaoToken = kakaoToken;
         if (kakaoToken != null && kakaoToken.getMember() != this) {

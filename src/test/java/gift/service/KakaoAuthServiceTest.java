@@ -11,7 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import gift.dto.auth.KakaoMemberResponse;
-import gift.dto.auth.KakaoTokenCommand;
+import gift.dto.auth.KakaoCreateTokenCommand;
 import gift.dto.auth.KakaoTokenResponse;
 import gift.entity.Member;
 import gift.repository.MemberRepository;
@@ -41,7 +41,7 @@ class KakaoAuthServiceTest {
     @InjectMocks
     private KakaoAuthService kakaoAuthService;
 
-    private final KakaoTokenCommand command = new KakaoTokenCommand("code", "id", "uri", "secret");
+    private final KakaoCreateTokenCommand command = new KakaoCreateTokenCommand("code", "id", "uri", "secret");
 
     @Test
     @DisplayName("카카오 로그인 성공 - 신규 회원")
