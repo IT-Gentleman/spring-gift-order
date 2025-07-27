@@ -36,6 +36,9 @@ kakao:
 </details>
 
 ## Step1
+<details>
+<summary>Click to view details</summary>
+
 ### implementation
 #### [refactor]
 - [x] ~~Entity 필드의 `Min`, `Max` 어노테이션 제거~~
@@ -75,6 +78,17 @@ kakao:
 
 #### [fix]
 - [x] soft deleted Member의 토큰을 가지고 Authentication을 수행하는것을 방지
+</details>
+
+## Step2
+### implementation
+#### [feat]
+- [ ] 카카오토큰을 저장하는 KakaoToken 엔티티 추가
+  - 카카오 로그인 시, 카카오 서버로부터 받은 토큰을 저장
+  - 토큰 만료 시점에 대한 정보도 저장
+- [ ] 카카오토큰의 유효성 검증을 위한 KakaoTokenService 추가
+  - 카카오토큰의 만료 여부를 확인하고, 만료된 경우 재발급을 요청
+- Ordering 기능 구현
 
 ## TODO
 ### Whenever is ready
