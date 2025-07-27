@@ -30,7 +30,7 @@ public class WishService {
     // Create
     @Transactional
     public WishDto addWishItem(NewWishCommand wishCommand) {
-        Member member = memberService.findMemberById(wishCommand.memberId());
+        Member member = memberService.findMemberByIdNotDeleted(wishCommand.memberId());
         Product product = productService.findProductByIdAndNotDeleted(wishCommand.productId());
 
         if (wishRepository.existsByMemberIdAndProductId(member.getId(), product.getId())) {
@@ -57,11 +57,12 @@ public class WishService {
         Wish wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new NotFoundException("Wish not found: id=" + wishId));
         // wish의 소유자가 본인인지 확인
-        if (!wish.getMember().getId().equals(memberId)) {
+        Member owner = wish.getMember();
+        if (!owner.getId().equals(memberId)) {
             // 본인소유가 아닌 wish의 경우는 hiding 처리됨
             throw new NotFoundException("Wish not found: id=" + wishId);
         }
         // 본인소유인 경우 삭제
-        wishRepository.deleteById(wishId);
+        owner.removeWish(wish);
     }
 }

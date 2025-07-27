@@ -37,8 +37,15 @@ public class MemberService {
 
     // Read
     // 동일 패키지 내 사용 제한
+    // 삭제된 멤버 접근, 관리자용
     Member findMemberById(Long id) {
         return memberRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Member not found: id=" + id));
+    }
+
+    // 동일 패키지 내 사용 제한
+    Member findMemberByIdNotDeleted(Long id) {
+        return memberRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new NotFoundException("Member not found or deleted: id=" + id));
     }
 
@@ -57,7 +64,7 @@ public class MemberService {
     // Update
     @Transactional
     public MemberDto updateMember(UpdateMemberCommand updateMemberCommand) {
-        Member member = findMemberById(updateMemberCommand.id());
+        Member member = findMemberByIdNotDeleted(updateMemberCommand.id());
         if (!member.getEmail().equals(updateMemberCommand.email())
                 && memberRepository.existsByEmail(updateMemberCommand.email())) {
             throw new ConflictException(
@@ -76,7 +83,7 @@ public class MemberService {
     // Delete
     @Transactional
     public void deleteMember(Long id) {
-        Member member = findMemberById(id);
+        Member member = findMemberByIdNotDeleted(id);
         member.setDeleted(); // soft delete
     }
 }

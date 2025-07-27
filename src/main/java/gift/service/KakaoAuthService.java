@@ -6,9 +6,11 @@ import static gift.util.HttpUtil.sendPost;
 import gift.dto.auth.KakaoMemberResponse;
 import gift.dto.auth.KakaoTokenCommand;
 import gift.dto.auth.KakaoTokenResponse;
+import gift.entity.KakaoToken;
 import gift.entity.Member;
 import gift.repository.MemberRepository;
 import gift.token.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +27,18 @@ public class KakaoAuthService {
     private final RestClient restClient;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final TokenEncryptionService tokenEncryptionService;
+
+    private final String kakaoClientId;
 
     public KakaoAuthService(RestClient restClient, MemberRepository memberRepository,
-            JwtTokenProvider jwtTokenProvider) {
+            JwtTokenProvider jwtTokenProvider, TokenEncryptionService tokenEncryptionService,
+            @Value("${kakao.client-id}") String kakaoClientId) {
         this.restClient = restClient;
         this.memberRepository = memberRepository;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenEncryptionService = tokenEncryptionService;
+        this.kakaoClientId = kakaoClientId;
     }
 
     @Transactional
@@ -38,6 +46,7 @@ public class KakaoAuthService {
         KakaoTokenResponse kakaoToken = getKakaoToken(command);
         KakaoMemberResponse kakaoMember = getKakaoMember(kakaoToken.accessToken());
         Member ourMember = getMemberOrCreateFromKakaoId(kakaoMember.id());
+        saveKakaoToken(ourMember, kakaoToken.accessToken(), kakaoToken.refreshToken());
         return jwtTokenProvider.createToken(ourMember);
     }
 
@@ -59,6 +68,14 @@ public class KakaoAuthService {
                         MediaType.APPLICATION_FORM_URLENCODED,
                         headers, KakaoMemberResponse.class);
         return getBodyOf(response);
+    }
+
+    private void saveKakaoToken(Member member, String accessToken, String refreshToken) {
+        KakaoToken tokenToSave = new KakaoToken(member,
+                tokenEncryptionService.encrypt(accessToken),
+                tokenEncryptionService.encrypt(refreshToken)
+        );
+        member.updateKakaoToken(tokenToSave);
     }
 
     private <T> T getBodyOf(ResponseEntity<T> response) {
