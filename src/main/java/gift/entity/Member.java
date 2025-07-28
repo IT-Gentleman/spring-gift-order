@@ -57,6 +57,13 @@ public class Member extends SoftDeleteEntity {
         this.role = role;
     }
 
+    // constructor for test code with kakaoId and wishlist
+    public Member(Long id, Long kakaoId, List<Wish> wishList) {
+        this.id = id;
+        this.kakaoId = kakaoId;
+        this.wishList = wishList;
+    }
+
     // constructor for member creation. Use as a factory method
     public Member(String email, String password, Role role) {
         this.email = email;
@@ -108,6 +115,10 @@ public class Member extends SoftDeleteEntity {
 
     public String getPassword() {
         return password;
+    }
+
+    public Long getWishCount() {
+        return wishList != null ? (long) wishList.size() : 0L;
     }
 
     public Long getKakaoId() {

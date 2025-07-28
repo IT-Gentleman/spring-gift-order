@@ -5,6 +5,9 @@
 ```yaml
 kakao:
   client-id: write-your-kakao-client-id-here
+jasypt:
+  encryptor:
+    password: write-your-jasypt-password-here
 ```
 - 이 양식은 `application-secret.yml.example` 파일을 복사하여 사용하여도 무방합니다.
 - 해당 파일은 `.gitignore`에 포함되어 있어, GitHub에 업로드되지 않습니다.
@@ -91,6 +94,9 @@ kakao:
 - [x] Ordering 기능 구현 (카카오 메시지 전송 제외)
 - [x] 카카오 메시지 전송 기능 구현
 - [x] Ordering 과정에 카카오 메시지 전송 추가
+
+#### [test]
+- [x] Ordering 관련 테스트코드 추가
 
 ## TODO
 ### Whenever is ready

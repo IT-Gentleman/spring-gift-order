@@ -97,7 +97,7 @@ class MemberServiceTest {
             Role newRole = Role.ROLE_ADMIN;
 
             Member existingMember = new Member(id, email, hashedPassword, role);
-            when(memberRepository.findById(id)).thenReturn(Optional.of(existingMember));
+            when(memberRepository.findByIdAndDeletedAtIsNull(id)).thenReturn(Optional.of(existingMember));
 
             MemberDto result = memberService.updateMember(
                     new UpdateMemberCommand(id, newEmail, false, newRole));
@@ -122,7 +122,7 @@ class MemberServiceTest {
             Role newRole = Role.ROLE_ADMIN;
 
             Member existingMember = new Member(id, email, hashedPassword, role);
-            when(memberRepository.findById(id)).thenReturn(Optional.of(existingMember));
+            when(memberRepository.findByIdAndDeletedAtIsNull(id)).thenReturn(Optional.of(existingMember));
 
             try (
                     MockedStatic<BCryptEncryptor> encryptor = mockStatic(BCryptEncryptor.class);

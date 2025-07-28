@@ -71,7 +71,10 @@ public class KakaoAuthService {
         String accessToken = tokenEncryptionService.decrypt(kakaoToken.getAccessToken());
         try {
             return apiCall.apply(accessToken);
-        } catch (HttpClientErrorException.Unauthorized e) {
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() != HttpStatus.UNAUTHORIZED) {
+                throw e; // 다른 오류는 그대로 던짐
+            }
             // Access token이 만료된 경우, refresh token을 사용하여 새로운 access token을 받아옴
             KakaoTokenResponse newKakaoToken = getKakaoToken(new KakaoRefreshTokenCommand(
                     kakaoClientId,
