@@ -1,5 +1,6 @@
 package gift.service;
 
+import gift.dto.kakaomessage.SendKakaoMessageRequest;
 import gift.dto.order.CreateOrderCommand;
 import gift.dto.order.OrderDto;
 import gift.entity.Member;
@@ -18,12 +19,15 @@ public class OrderService {
     private final ProductOptionService productOptionService;
     private final MemberService memberService;
     private final OrderRepository orderRepository;
+    private final KakaoMessageService kakaoMessageService;
 
     public OrderService(ProductOptionService productOptionService,
-            MemberService memberService, OrderRepository orderRepository) {
+            MemberService memberService, OrderRepository orderRepository,
+            KakaoMessageService kakaoMessageService) {
         this.productOptionService = productOptionService;
         this.memberService = memberService;
         this.orderRepository = orderRepository;
+        this.kakaoMessageService = kakaoMessageService;
     }
 
     @Transactional
@@ -60,7 +64,12 @@ public class OrderService {
                         command.message()
                 )
         );
-        //orderRepository.flush();
-        return OrderDto.from(createdOrder, senderMember, recieverMember);
+        orderRepository.flush();
+        OrderDto dto = OrderDto.from(createdOrder, senderMember, recieverMember);
+
+        // 카카오 메시지 전송, 실패 시 rollback
+        kakaoMessageService.sendMessageToSelf(recieverMember.getId(),
+                SendKakaoMessageRequest.from(dto));
+        return dto;
     }
 }

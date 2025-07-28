@@ -124,7 +124,7 @@ public class KakaoAuthService {
         }
     }
 
-    private <T> T getBodyOf(ResponseEntity<T> response) {
+    public <T> T getBodyOf(ResponseEntity<T> response) {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else if (response.getStatusCode().is4xxClientError()) {

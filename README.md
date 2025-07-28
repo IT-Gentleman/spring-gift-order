@@ -89,8 +89,8 @@ kakao:
 - [x] 카카오토큰의 유효성 검증을 위한 KakaoAuthService 메소드 추가
   - 카카오토큰의 만료 여부를 확인하고, 만료된 경우 재발급을 요청
 - [x] Ordering 기능 구현 (카카오 메시지 전송 제외)
-- [ ] 카카오 메시지 전송 기능 구현
-- [ ] Ordering 과정에 카카오 메시지 전송 추가
+- [x] 카카오 메시지 전송 기능 구현
+- [x] Ordering 과정에 카카오 메시지 전송 추가
 
 ## TODO
 ### Whenever is ready
@@ -103,6 +103,9 @@ kakao:
   - 이 구현방법 사용 시, Service 레이어에서 최대 N회 재시도하는 로직 구현 필요
 - Entity 단위테스트 추가
 - Kakao Auth 요청/응답확인 간 state 사용을 통한 CSRF 방지
+
+#### [refactor]
+- HttpUtil 클래스 대신 HttpExchange를 활용하도록 변경
 
 ### Wondering to apply
 #### [refactor]
