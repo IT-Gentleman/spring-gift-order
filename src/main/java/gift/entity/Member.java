@@ -3,12 +3,14 @@ package gift.entity;
 import static gift.util.BCryptEncryptor.encrypt;
 import static gift.util.PasswordUtility.generateRandomPassword;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -38,8 +40,11 @@ public class Member extends SoftDeleteEntity {
     @Column(unique = true)
     private Long kakaoId;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wish> wishList;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private KakaoToken kakaoToken;
 
     protected Member() {
     }
@@ -50,6 +55,13 @@ public class Member extends SoftDeleteEntity {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    // constructor for test code with kakaoId and wishlist
+    public Member(Long id, Long kakaoId, List<Wish> wishList) {
+        this.id = id;
+        this.kakaoId = kakaoId;
+        this.wishList = wishList;
     }
 
     // constructor for member creation. Use as a factory method
@@ -105,6 +117,25 @@ public class Member extends SoftDeleteEntity {
         return password;
     }
 
+    public Long getWishCount() {
+        return wishList != null ? (long) wishList.size() : 0L;
+    }
+
+    public Long getKakaoId() {
+        return kakaoId;
+    }
+
+    public KakaoToken getKakaoToken() {
+        return kakaoToken;
+    }
+
+    public void updateKakaoToken(KakaoToken kakaoToken) {
+        this.kakaoToken = kakaoToken;
+        if (kakaoToken != null && kakaoToken.getMember() != this) {
+            kakaoToken.setMember(this);
+        }
+    }
+
     public void applyPatch(String email, String password, Role authority) {
         if (email != null) {
             this.email = email;
@@ -114,6 +145,18 @@ public class Member extends SoftDeleteEntity {
         }
         if (authority != null) {
             this.role = authority;
+        }
+    }
+
+    public void removeWishByProductId(Long productId) {
+        if (wishList != null) {
+            wishList.removeIf(wish -> wish.getProduct().getId().equals(productId));
+        }
+    }
+
+    public void removeWish(Wish wish) {
+        if (wishList != null) {
+            wishList.remove(wish);
         }
     }
 }

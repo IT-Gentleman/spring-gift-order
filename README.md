@@ -5,6 +5,9 @@
 ```yaml
 kakao:
   client-id: write-your-kakao-client-id-here
+jasypt:
+  encryptor:
+    password: write-your-jasypt-password-here
 ```
 - 이 양식은 `application-secret.yml.example` 파일을 복사하여 사용하여도 무방합니다.
 - 해당 파일은 `.gitignore`에 포함되어 있어, GitHub에 업로드되지 않습니다.
@@ -36,6 +39,9 @@ kakao:
 </details>
 
 ## Step1
+<details>
+<summary>Click to view details</summary>
+
 ### implementation
 #### [refactor]
 - [x] ~~Entity 필드의 `Min`, `Max` 어노테이션 제거~~
@@ -75,6 +81,37 @@ kakao:
 
 #### [fix]
 - [x] soft deleted Member의 토큰을 가지고 Authentication을 수행하는것을 방지
+</details>
+
+## Step2
+### implementation
+#### [feat]
+- [x] 카카오토큰을 저장하는 KakaoToken 엔티티 추가
+  - 카카오 로그인 시, 카카오 서버로부터 받은 토큰을 저장
+  - 토큰 만료 시점에 대한 정보도 저장
+- [x] 카카오토큰의 유효성 검증을 위한 KakaoAuthService 메소드 추가
+  - 카카오토큰의 만료 여부를 확인하고, 만료된 경우 재발급을 요청
+- [x] Ordering 기능 구현 (카카오 메시지 전송 제외)
+- [x] 카카오 메시지 전송 기능 구현
+- [x] Ordering 과정에 카카오 메시지 전송 추가
+
+#### [refactor]
+- [x] JSON 직렬화 코드 Util화
+  - writeValueAsString 메소드와 그를 감싸는 try-catch문 보일러플레이트화 방지
+- [x] `SendKakaoMessaageRequest`의 팩토리메소드 `from` 내의 `messageContent` 작성로직을 `OrderDto`의 메소드로 분리
+- [x] `FeedKakaoMessageRequest`를 포함한 예하 내부 Dto에서 생성자 사용하지 않도록 변경
+  - 단일책임(단순 데이터 전달)원칙 위배, 추후 명세 변경 시 변경이 필요한 부분을 최소화하기 위함
+- [x] `OrderService` 내에 사용된 불필요한 Exception catch문 제거
+- [x] `OrderService`의 `receiverMember`와 `senderMember` 동일성체크 로직 제거
+  - 동일성 체크를 통한 쿼리 이득 대신, 명시적 호출하여 가독성 확보
+  - 쿼리이득 확보 위한 `MemberService`에서 호출하는 find문의 조건에 deletedAt을 제거, id기반 조회 후 
+    deletedAt이 null인지 확인하는 로직으로 변경
+- [x] `KakaoMessageService`의 baseUrl을 상수로 분리
+- [x] `KakaoAuthService`의 `executeWithKakaoTokenRefresh` 메소드에서 `getBodyOf` 메소드를 명시적으로 호출하도록 변경
+  - `getBodyOf` 메소드 사용을 강제하여, 일관성있는 예외처리를 수행하기 위함
+
+#### [test]
+- [x] Ordering 관련 테스트코드 추가
 
 ## TODO
 ### Whenever is ready
@@ -87,6 +124,9 @@ kakao:
   - 이 구현방법 사용 시, Service 레이어에서 최대 N회 재시도하는 로직 구현 필요
 - Entity 단위테스트 추가
 - Kakao Auth 요청/응답확인 간 state 사용을 통한 CSRF 방지
+
+#### [refactor]
+- HttpUtil 클래스 대신 HttpExchange를 활용하도록 변경
 
 ### Wondering to apply
 #### [refactor]

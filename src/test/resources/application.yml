@@ -18,4 +18,8 @@ jwt:
 kakao:
   client-id: 테스트 과정에서는 사용되지 않음
 
+jasypt:
+  encryptor:
+    password: 테스트 과정에서는 사용되지 않음
+
 uri: http://localhost:8080 # 테스트에서 사용할 때는 적절히 수정하여 사용해야할듯

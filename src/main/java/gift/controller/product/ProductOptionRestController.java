@@ -37,7 +37,7 @@ public class ProductOptionRestController {
     // Create
     @PostMapping
     public ResponseEntity<ProductOptionResponse> create(@PathVariable Long productId,
-            @RequestBody AddProductOptionRequest request) {
+            @Valid @RequestBody AddProductOptionRequest request) {
         NewProductOptionCommand command = new NewProductOptionCommand(
                 request.name(),
                 request.quantity(),
@@ -73,7 +73,7 @@ public class ProductOptionRestController {
     // Update
     @PatchMapping("/{optionId}")
     public ResponseEntity<ProductOptionResponse> update(@PathVariable Long productId,
-            @PathVariable Long optionId, @RequestBody PatchProductOptionRequest request) {
+            @PathVariable Long optionId, @Valid @RequestBody PatchProductOptionRequest request) {
         UpdateProductOptionCommand command = new UpdateProductOptionCommand(
                 optionId,
                 request.name(),

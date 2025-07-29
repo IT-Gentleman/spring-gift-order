@@ -67,7 +67,7 @@ class WishServiceTest {
         @DisplayName("정상적인 위시리스트 아이템 추가")
         void 정상적인_위시리스트_아이템_추가() {
             // given
-            when(memberService.findMemberById(member.getId())).thenReturn(member);
+            when(memberService.findMemberByIdNotDeleted(member.getId())).thenReturn(member);
             when(productService.findProductByIdAndNotDeleted(product.getId())).thenReturn(product);
             when(wishRepository.existsByMemberIdAndProductId(member.getId(),
                     product.getId())).thenReturn(false);
@@ -84,7 +84,7 @@ class WishServiceTest {
         @DisplayName("이미 존재하는 위시리스트 아이템 추가 시 예외 발생")
         void 이미_존재하는_위시리스트_아이템_추가_시_예외_발생() {
             // given
-            when(memberService.findMemberById(member.getId())).thenReturn(member);
+            when(memberService.findMemberByIdNotDeleted(member.getId())).thenReturn(member);
             when(productService.findProductByIdAndNotDeleted(product.getId())).thenReturn(product);
             when(wishRepository.existsByMemberIdAndProductId(member.getId(),
                     product.getId())).thenReturn(true);

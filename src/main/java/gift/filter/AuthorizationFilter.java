@@ -45,6 +45,10 @@ public class AuthorizationFilter implements Filter {
         if (uri.startsWith("/api/wishes")) {
             return isAuthenticated(role);
         }
+        // /api/orders : 인증된 사용자만 접근 가능
+        if (uri.startsWith("/api/orders")) {
+            return isAuthenticated(role);
+        }
         // /admin/products/new : MD role만 접근 가능
         if (uri.startsWith("/admin/products/new")) {
             return hasRole(role, Role.ROLE_MD);
