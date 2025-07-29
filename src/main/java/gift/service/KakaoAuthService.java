@@ -58,7 +58,7 @@ public class KakaoAuthService {
     }
 
     @Transactional
-    public <T> T executeWithKakaoTokenRefresh(Long memberId, Function<String, T> apiCall) {
+    public <T> T executeWithKakaoTokenRefresh(Long memberId, Function<String, ResponseEntity<T>> apiCall) {
         Member member = memberService.findMemberByIdNotDeleted(memberId);
         KakaoToken kakaoToken = member.getKakaoToken();
         if (kakaoToken == null) {
@@ -70,7 +70,7 @@ public class KakaoAuthService {
         }
         String accessToken = tokenEncryptionService.decrypt(kakaoToken.getAccessToken());
         try {
-            return apiCall.apply(accessToken);
+            return getBodyOf(apiCall.apply(accessToken));
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() != HttpStatus.UNAUTHORIZED) {
                 throw e; // 다른 오류는 그대로 던짐
@@ -82,7 +82,7 @@ public class KakaoAuthService {
             ));
             saveOrUpdateKakaoToken(member, newKakaoToken.accessToken(), newKakaoToken.refreshToken());
             accessToken = newKakaoToken.accessToken();
-            return apiCall.apply(accessToken);
+            return getBodyOf(apiCall.apply(accessToken));
         }
     }
 

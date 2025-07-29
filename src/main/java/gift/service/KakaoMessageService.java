@@ -47,9 +47,8 @@ public class KakaoMessageService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("template_object", templateObjectJson);
 
-
-        SendKakaoMessageResponse response = kakaoAuthService.getBodyOf(
-                kakaoAuthService.executeWithKakaoTokenRefresh(memberId, accessToken -> {
+        SendKakaoMessageResponse response = kakaoAuthService.executeWithKakaoTokenRefresh(memberId,
+                accessToken -> {
                     MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
                     headers.add("Authorization", "Bearer " + accessToken);
 
@@ -60,8 +59,7 @@ public class KakaoMessageService {
                             body,
                             SendKakaoMessageResponse.class
                     );
-                })
-        );
+                });
         if (response.resultCode() != 0) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "Failed to send Kakao message");
