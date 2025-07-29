@@ -24,6 +24,8 @@ public class KakaoMessageService {
     private final KakaoAuthService kakaoAuthService;
     private final ObjectMapper objectMapper;
 
+    private final String baseUrl = "https://kapi.kakao.com";
+
     public KakaoMessageService(RestClient restClient, KakaoAuthService kakaoAuthService,
             ObjectMapper objectMapper) {
         this.restClient = restClient;
@@ -52,7 +54,7 @@ public class KakaoMessageService {
                     headers.add("Authorization", "Bearer " + accessToken);
 
                     return sendPost(restClient,
-                            "https://kapi.kakao.com/v2/api/talk/memo/default/send",
+                            baseUrl + "/v2/api/talk/memo/default/send",
                             MediaType.APPLICATION_FORM_URLENCODED,
                             headers,
                             body,
