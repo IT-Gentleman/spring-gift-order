@@ -95,6 +95,22 @@ jasypt:
 - [x] 카카오 메시지 전송 기능 구현
 - [x] Ordering 과정에 카카오 메시지 전송 추가
 
+#### [refactor]
+- [ ] JSON 직렬화 코드 Util화
+  - writeValueAsString 메소드와 그를 감싸는 try-catch문 보일러플레이트화 방지
+- [ ] `SendKakaoMessaageRequest`의 팩토리메소드 `from` 내의 `messageContent` 작성로직을 `OrderDto`의 메소드로 분리
+- [ ] `FeedKakaoMessageRequest`를 포함한 예하 내부 Dto에서 생성자 사용하지 않도록 변경
+  - 단일책임(단순 데이터 전달)원칙 위배, 추후 명세 변경 시 변경이 필요한 부분을 최소화하기 위함
+- [ ] `OrderService` 내에 사용된 불필요한 Exception catch문 제거
+- [ ] `OrderService`의 `receiverMember`와 `senderMember` 동일성체크 로직 제거
+  - 동일성 체크를 통한 쿼리 이득 대신, 명시적 호출하여 가독성 확보
+  - 쿼리이득 확보 위한 `MemberService`에서 호출하는 find문의 조건에 deletedAt을 제거, id기반 조회 후 
+    deletedAt이 null인지 확인하는 로직으로 변경
+- [ ] `KakaoMessageService`의 baseUrl을 상수로 분리
+- [ ] `KakaoAuthService`의 `executeWithKakaoTokenRefresh` 메소드와 `getBodyOf` 메소드를 감싸는 새로운 메소드 생성 및 적용
+  - `getBodyOf` 메소드 사용을 강제하여, 일관성있는 예외처리를 수행하기 위함
+  - 기존 `executeWithKakaoTokenRefresh` 메소드는 private 메소드로 변경
+
 #### [test]
 - [x] Ordering 관련 테스트코드 추가
 
