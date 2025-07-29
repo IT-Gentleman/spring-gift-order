@@ -13,7 +13,7 @@ public record SendKakaoMessageRequest(
         return new SendKakaoMessageRequest(
                 orderDto.senderMember().getId(),
                 orderDto.receiverMember().getId(),
-                orderDto.senderMember().getEmail() + " send you '" + orderDto.productOption().getName() + "'(Quantity: " + orderDto.quantity() + ")!\n" + orderDto.message(),
+                orderDto.getPresentMessage(),
                 orderDto.productOption().getProduct().getImageUrl(),
                 orderDto.productOption().getProduct().getImageUrl()
         );
