@@ -45,8 +45,12 @@ public class MemberService {
 
     // 동일 패키지 내 사용 제한
     Member findMemberByIdNotDeleted(Long id) {
-        return memberRepository.findByIdAndDeletedAtIsNull(id)
-                .orElseThrow(() -> new NotFoundException("Member not found or deleted: id=" + id));
+        Member member = findMemberById(id);
+        // 만약 삭제된 멤버를 찾으려는 경우 예외 발생
+        if (member.isDeleted()) {
+            throw new NotFoundException("Member deleted: id=" + id);
+        }
+        return member;
     }
 
     @Transactional(readOnly = true)

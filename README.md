@@ -102,7 +102,7 @@ jasypt:
 - [x] `FeedKakaoMessageRequest`를 포함한 예하 내부 Dto에서 생성자 사용하지 않도록 변경
   - 단일책임(단순 데이터 전달)원칙 위배, 추후 명세 변경 시 변경이 필요한 부분을 최소화하기 위함
 - [x] `OrderService` 내에 사용된 불필요한 Exception catch문 제거
-- [ ] `OrderService`의 `receiverMember`와 `senderMember` 동일성체크 로직 제거
+- [x] `OrderService`의 `receiverMember`와 `senderMember` 동일성체크 로직 제거
   - 동일성 체크를 통한 쿼리 이득 대신, 명시적 호출하여 가독성 확보
   - 쿼리이득 확보 위한 `MemberService`에서 호출하는 find문의 조건에 deletedAt을 제거, id기반 조회 후 
     deletedAt이 null인지 확인하는 로직으로 변경

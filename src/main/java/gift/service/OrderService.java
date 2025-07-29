@@ -32,10 +32,8 @@ public class OrderService {
 
     @Transactional
     public OrderDto createOrder(CreateOrderCommand command) {
-        Member senderMember = memberService
-                .findMemberByIdNotDeleted(command.senderMemberId());
-        Member recieverMember = command.senderMemberId().equals(command.receiverMemberId()) ?
-                senderMember : memberService.findMemberByIdNotDeleted(command.receiverMemberId());
+        Member senderMember = memberService.findMemberByIdNotDeleted(command.senderMemberId());
+        Member recieverMember = memberService.findMemberByIdNotDeleted(command.receiverMemberId());
         ProductOption productOption = productOptionService
                 .findProductOptionById(command.productOptionId());
 
