@@ -2,12 +2,11 @@ package gift.service;
 
 import static gift.util.HttpUtil.sendPost;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gift.dto.kakaomessage.FeedKakaoMessageRequest;
-import gift.dto.kakaomessage.KakaoMessageTemplateArgs;
 import gift.dto.kakaomessage.SendKakaoMessageRequest;
 import gift.dto.kakaomessage.SendKakaoMessageResponse;
+import gift.util.JsonUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -31,19 +30,13 @@ public class KakaoMessageService {
     }
 
     public void sendMessageToSelf(Long memberId, SendKakaoMessageRequest request) {
-        String templateObjectJson;
-        try {
-            FeedKakaoMessageRequest templateDto = new FeedKakaoMessageRequest(
-                    "You got a new message!",
-                    request.imageUrl(),
-                    request.messageContent(),
-                    request.linkUrl()
-            );
-            templateObjectJson = objectMapper.writeValueAsString(templateDto);
-        } catch (JsonProcessingException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Failed to serialize message object to JSON", e);
-        }
+        FeedKakaoMessageRequest templateDto = new FeedKakaoMessageRequest(
+                "You got a new message!",
+                request.imageUrl(),
+                request.messageContent(),
+                request.linkUrl()
+        );
+        String templateObjectJson = JsonUtil.toJsonString(objectMapper, templateDto);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("template_object", templateObjectJson);

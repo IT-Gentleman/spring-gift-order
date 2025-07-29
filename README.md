@@ -96,7 +96,7 @@ jasypt:
 - [x] Ordering 과정에 카카오 메시지 전송 추가
 
 #### [refactor]
-- [ ] JSON 직렬화 코드 Util화
+- [x] JSON 직렬화 코드 Util화
   - writeValueAsString 메소드와 그를 감싸는 try-catch문 보일러플레이트화 방지
 - [ ] `SendKakaoMessaageRequest`의 팩토리메소드 `from` 내의 `messageContent` 작성로직을 `OrderDto`의 메소드로 분리
 - [ ] `FeedKakaoMessageRequest`를 포함한 예하 내부 Dto에서 생성자 사용하지 않도록 변경
