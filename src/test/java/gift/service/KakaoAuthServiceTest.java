@@ -186,7 +186,7 @@ class KakaoAuthServiceTest {
             Long memberId = 1L;
             Member mockMember = mock(Member.class);
             KakaoToken kakaoToken = new KakaoToken(mockMember, "valid_access_token", "valid_refresh_token");
-            Function<String, String> apiCall = (token) -> "Success";
+            Function<String, ResponseEntity<String>> apiCall = (token) -> ResponseEntity.ok("Success");
 
             when(memberService.findMemberByIdNotDeleted(memberId)).thenReturn(mockMember);
             when(mockMember.getKakaoToken()).thenReturn(kakaoToken);
@@ -211,12 +211,12 @@ class KakaoAuthServiceTest {
             KakaoToken kakaoToken = new KakaoToken(mockMember, "expired_access_token", "valid_refresh_token");
 
             // Mock the API call function to throw an exception on the first call and succeed on the second
-            Function<String, String> mockApiCall = mock(Function.class);
+            Function<String, ResponseEntity<String>> mockApiCall = mock(Function.class);
             when(mockApiCall.apply("decrypted_expired_access_token"))
                     .thenThrow(
                             new HttpClientErrorException(HttpStatus.UNAUTHORIZED));
             when(mockApiCall.apply("new_access_token"))
-                    .thenReturn("Success after refresh");
+                    .thenReturn(ResponseEntity.ok("Success after refresh"));
 
             // Configure mock dependencies
             when(memberService.findMemberByIdNotDeleted(memberId)).thenReturn(mockMember);

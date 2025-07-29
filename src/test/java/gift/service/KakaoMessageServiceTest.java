@@ -52,7 +52,7 @@ public class KakaoMessageServiceTest {
             // arrange
             when(objectMapper.writeValueAsString(any()))
                     .thenReturn("{\"template_object\":\"sample template object\"}");
-            when(kakaoAuthService.getBodyOf(any())).thenReturn(new SendKakaoMessageResponse(0));
+            when(kakaoAuthService.executeWithKakaoTokenRefresh(any(), any())).thenReturn(new SendKakaoMessageResponse(0));
 
             // act & assert
             assertDoesNotThrow(() -> {
@@ -66,8 +66,7 @@ public class KakaoMessageServiceTest {
             // arrange
             when(objectMapper.writeValueAsString(any()))
                     .thenReturn("{\"template_object\":\"sample template object\"}");
-            when(kakaoAuthService.getBodyOf(any()))
-                    .thenReturn(new SendKakaoMessageResponse(100));
+            when(kakaoAuthService.executeWithKakaoTokenRefresh(any(), any())).thenReturn(new SendKakaoMessageResponse(100));
 
             // act & assert
             assertThrows(ResponseStatusException.class, () -> {
