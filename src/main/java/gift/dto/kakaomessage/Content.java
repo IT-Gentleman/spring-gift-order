@@ -10,8 +10,5 @@ public record Content(
         String description,
         Link link
 ) {
-    public Content(String title, String imageUrl, String description, String commonUrl) {
-        this(title, imageUrl, description, new Link(commonUrl));
-    }
 
 }

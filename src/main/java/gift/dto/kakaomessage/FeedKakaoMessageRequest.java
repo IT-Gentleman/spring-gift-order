@@ -8,7 +8,7 @@ public record FeedKakaoMessageRequest(
         String objectType,
         Content content
 ) {
-    public FeedKakaoMessageRequest(String title, String imageUrl, String description, String commonUrl) {
-        this("feed", new Content(title, imageUrl, description, commonUrl));
+    public FeedKakaoMessageRequest(Content content) {
+        this("feed", content);
     }
 }

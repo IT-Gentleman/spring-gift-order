@@ -3,7 +3,9 @@ package gift.service;
 import static gift.util.HttpUtil.sendPost;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gift.dto.kakaomessage.Content;
 import gift.dto.kakaomessage.FeedKakaoMessageRequest;
+import gift.dto.kakaomessage.Link;
 import gift.dto.kakaomessage.SendKakaoMessageRequest;
 import gift.dto.kakaomessage.SendKakaoMessageResponse;
 import gift.util.JsonUtil;
@@ -31,10 +33,12 @@ public class KakaoMessageService {
 
     public void sendMessageToSelf(Long memberId, SendKakaoMessageRequest request) {
         FeedKakaoMessageRequest templateDto = new FeedKakaoMessageRequest(
-                "You got a new message!",
-                request.imageUrl(),
-                request.messageContent(),
-                request.linkUrl()
+                new Content(
+                        "You got a new message!",
+                        request.messageContent(),
+                        request.imageUrl(),
+                        new Link(request.linkUrl())
+                )
         );
         String templateObjectJson = JsonUtil.toJsonString(objectMapper, templateDto);
 
