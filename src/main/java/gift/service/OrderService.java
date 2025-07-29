@@ -8,10 +8,8 @@ import gift.entity.Order;
 import gift.entity.ProductOption;
 import gift.exception.BadRequestException;
 import gift.repository.OrderRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class OrderService {
