@@ -47,8 +47,6 @@ public class OrderService {
             throw new BadRequestException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new BadRequestException("Order quantity should be a positive number.");
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         // 위시리스트 반영
