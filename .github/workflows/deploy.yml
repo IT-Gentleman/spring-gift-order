@@ -26,13 +26,18 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Pick Target Jar File
+        run: |
+          JAR_FILE_PATH=$(find build/libs -name "*.jar" ! -name "*-plain.jar")
+          mv $JAR_FILE_PATH app.jar
+
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: "build/libs/*.jar, deploy.sh"
+          source: "app.jar, deploy.sh"
           target: "/home/ubuntu/deploy"
 
       - name: Deploy to EC2

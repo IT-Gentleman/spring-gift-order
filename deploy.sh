@@ -1,7 +1,8 @@
 #!/bin/bash
-BUILD_PATH=$(ls /home/ubuntu/deploy/*.jar | head -n 1)
+BUILD_PATH=$(ls /home/ubuntu/deploy/app.jar)
 JAR_NAME=$(basename $BUILD_PATH)
 echo "> 새 애플리케이션: $JAR_NAME"
+LOG_FILE="/home/ubuntu/app.log"
 
 CURRENT_PID=$(pgrep -f $JAR_NAME)
 
@@ -19,6 +20,6 @@ cd $DEPLOY_PATH
 
 echo "> 새 애플리케이션 배포"
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-nohup java -jar -Dspring.profiles.active=prod $DEPLOY_JAR > /dev/null 2> /dev/null < /dev/null &
+nohup java -jar -Dspring.profiles.active=prod $DEPLOY_JAR > $LOG_FILE 2>&1 &
 
 echo "> 배포 완료"
