@@ -120,7 +120,7 @@ jasypt:
 ## Step3
 ### implementation
 - [x] 배포를 위한 데이터베이스 설정 변경
-- [ ] EC2에서 실행될 셸 스크립트 작성
+- [x] EC2에서 실행될 셸 스크립트 작성
 - [ ] Github Action에 사용될 스크립트 작성
 
 ## TODO
