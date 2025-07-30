@@ -39,6 +39,7 @@ public class KakaoMessageServiceTest {
         Member kakaoMember = new Member(1L, 121L, null);
         Product product = new Product(1L, "Test Product", 10000, "sample-image-url", true, false);
         SendKakaoMessageRequest request = new SendKakaoMessageRequest(
+                "sample message title",
                 kakaoMember.getId(),
                 kakaoMember.getId(),
                 "sample kakao message including message which user sent",

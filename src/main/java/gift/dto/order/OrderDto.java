@@ -15,9 +15,12 @@ public record OrderDto(
         String message
 ) {
 
+    public String getPresentTitle() {
+        return senderMember.getEmail() + " present: '" + productOption.getProduct().getName() + "'!";
+    }
+
     public String getPresentMessage() {
-        return senderMember.getEmail() + " send you '" + productOption.getName() + "'(Quantity: "
-                + quantity + ")!\n" + message;
+        return productOption.getName() + "(Quantity: " + quantity + ")\n" + message;
     }
 
     public static OrderDto from(Order order, Member sender, Member receiver) {
