@@ -84,6 +84,9 @@ jasypt:
 </details>
 
 ## Step2
+<details>
+<summary>Click to view details</summary>
+
 ### implementation
 #### [feat]
 - [x] 카카오토큰을 저장하는 KakaoToken 엔티티 추가
@@ -112,6 +115,13 @@ jasypt:
 
 #### [test]
 - [x] Ordering 관련 테스트코드 추가
+</details>
+
+## Step3
+### implementation
+- [ ] 배포를 위한 데이터베이스 설정 변경
+- [ ] EC2에서 실행될 셸 스크립트 작성
+- [ ] Github Action에 사용될 스크립트 작성
 
 ## TODO
 ### Whenever is ready
