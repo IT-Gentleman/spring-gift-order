@@ -11,19 +11,19 @@ spring:
     console:
       enabled: true
   datasource:
-    url: jdbc:h2:mem:product
+    url: jdbc:h2:mem:product;MODE=MySQL;DATABASE_TO_LOWER=TRUE
     username: sa
     password:
   sql:
     init:
       mode: embedded
   jpa:
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
     show-sql: true
-
-uri: http://localhost:8080
 
 jwt:
   secret-key: bXktcHJpdmF0ZS1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tMzItYnl0ZXMtbGVuZ3RoLXNlY3VyZS1rZXktZm9yLWpqd3Q=
@@ -36,3 +36,21 @@ logging:
         orm:
           jdbc:
             bind: TRACE
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
