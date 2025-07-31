@@ -122,6 +122,7 @@ jasypt:
 - [x] 배포를 위한 데이터베이스 설정 변경
 - [x] EC2에서 실행될 셸 스크립트 작성
 - [x] Github Action에 사용될 스크립트 작성
+- [x] CORS 설정 추가를 통한 프론트엔드 병합 준비
 
 ## TODO
 ### Whenever is ready
