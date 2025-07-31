@@ -36,9 +36,9 @@ public class KakaoMessageService {
     public void sendMessageToSelf(Long memberId, SendKakaoMessageRequest request) {
         FeedKakaoMessageRequest templateDto = new FeedKakaoMessageRequest(
                 new Content(
-                        "You got a new message!",
-                        request.messageContent(),
+                        request.messageTitle(),
                         request.imageUrl(),
+                        request.messageContent(),
                         new Link(request.linkUrl())
                 )
         );

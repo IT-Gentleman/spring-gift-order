@@ -9,8 +9,14 @@ spring:
   sql:
     init:
       mode: never
+  flyway:
+    enabled: false
   main:
     allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:h2:mem:product;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
 jwt:
   secret-key: bXktcHJpdmF0ZS1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tMzItYnl0ZXMtbGVuZ3RoLXNlY3VyZS1rZXktZm9yLWpqd3Q=
   expire-length-ms: 3600000
@@ -21,5 +27,3 @@ kakao:
 jasypt:
   encryptor:
     password: 테스트 과정에서는 사용되지 않음
-
-uri: http://localhost:8080 # 테스트에서 사용할 때는 적절히 수정하여 사용해야할듯

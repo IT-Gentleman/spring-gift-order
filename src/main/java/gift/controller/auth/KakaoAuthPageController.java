@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
 @RequestMapping
@@ -21,22 +22,21 @@ public class KakaoAuthPageController {
     private final KakaoAuthService kakaoAuthService;
 
     private final String kakaoClientId;
-    private final String baseUri;
     private final String kakaoLoginRedirectUri = "/kakao-auth";
 
     public KakaoAuthPageController(KakaoAuthService kakaoAuthService,
-            @Value("${kakao.client-id}") String kakaoClientId,
-            @Value("${uri}") String baseUri) {
+            @Value("${kakao.client-id}") String kakaoClientId) {
         this.kakaoAuthService = kakaoAuthService;
         this.kakaoClientId = kakaoClientId;
-        this.baseUri = baseUri;
     }
 
     @GetMapping("/kakao-login")
     public ResponseEntity<Void> kakaoLogin() {
+        String myServerBaseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+
         URI redirectUri = URI.create(
                 "https://kauth.kakao.com/oauth/authorize?client_id=" + kakaoClientId
-                        + "&redirect_uri=" + baseUri + kakaoLoginRedirectUri
+                        + "&redirect_uri=" + myServerBaseUrl + kakaoLoginRedirectUri
                         + "&response_type=code"
         );
         HttpHeaders headers = new HttpHeaders();
@@ -50,10 +50,11 @@ public class KakaoAuthPageController {
             throw new ResponseStatusException(request.getHttpStatusOfError(),
                     request.errorDescription());
         }
+        String myServerBaseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         KakaoCreateTokenCommand command = new KakaoCreateTokenCommand(
                 "authorization_code",
                 kakaoClientId,
-                baseUri + kakaoLoginRedirectUri,
+                myServerBaseUrl + kakaoLoginRedirectUri,
                 request.code()
         );
         String ourToken = kakaoAuthService.loginWithKakao(command);
